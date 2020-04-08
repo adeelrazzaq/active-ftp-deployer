@@ -82,4 +82,4 @@ Parameter | Description
     include: [], // this would upload everything except dot files
     exclude: [] // e.g. exclude sourcemaps, and ALL files in node_modules (including dot files)
 }
-`
+```
