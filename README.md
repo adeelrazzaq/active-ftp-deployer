@@ -67,19 +67,19 @@ Parameter | Description
 
 ```json
 {
-    host: "",
-    port: 21,
+    "host": "",
+    "port": 21,
 
-    user: "anonymous",
-    password: "", // Password optional, prompted if none given
+    "user": "anonymous",
+    "password": "",
 
-    deleteRemote: false, // delete ALL existing files at destination before uploading, if true
-    forcePasv: true, // Passive mode is forced (EPSV command is not sent)
+    "deleteRemote": false,
+    "forcePasv": true,
 
-    localRoot: "",
-    remoteRoot: "",
+    "localRoot": "",
+    "remoteRoot": "",
 
-    include: [], // this would upload everything except dot files
-    exclude: [] // e.g. exclude sourcemaps, and ALL files in node_modules (including dot files)
+    "include": [],
+    "exclude": []
 }
 ```
