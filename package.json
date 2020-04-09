@@ -1,12 +1,13 @@
 {
-    "name": "ftp-deployer",
+    "name": "active-ftp-deployer",
     "version": "1.0.0",
     "description": "",
     "preferGlobal": false,
     "main": "./bin/index.js",
     "bin": {
+        "deploy": "./bin/index.js",
         "ftp-deploy": "./bin/index.js",
-        "deploy": "./bin/index.js"
+        "active-ftp-deploy": "./bin/index.js"
     },
     "directories": {
         "lib": "lib"
@@ -16,7 +17,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/adeelrazzaq/ftp-deployer.git"
+        "url": "git+https://github.com/adeelrazzaq/active-ftp-deployer.git"
     },
     "keywords": [
         "ftp",
@@ -30,9 +31,9 @@
     "author": "Adeel Razzaq",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/adeelrazzaq/ftp-deployer/issues"
+        "url": "https://github.com/adeelrazzaq/active-ftp-deployer/issues"
     },
-    "homepage": "https://github.com/adeelrazzaq/ftp-deployer#readme",
+    "homepage": "https://github.com/adeelrazzaq/active-ftp-deployer#readme",
     "dependencies": {
         "ftp-deploy": "^2.3.7"
     }
