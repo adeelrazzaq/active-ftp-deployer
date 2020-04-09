@@ -7,31 +7,84 @@ const ConfigBuilder = require('../lib/config-builder');
 const deployer = new FtpDeployer();
 const configBuilder = new ConfigBuilder();
 
-const args = process.argv.splice(2);
+const default_config_file_name = '.ftp-deployer.config.json';
 
-if (['-w', '-write', '-writeconfig'].includes(args[0].toLowerCase())) { //args[0] === '-w' || args[0] === '-write' || args[0] === '-writeconfig'
-    deployer.create_config_file(args[1]);
+
+var configArr = configBuilder.build_from_arguments();
+
+if ('writeConfig' in configArr) {
+    deployer.create_config_file(configArr['writeConfig']);
     process.exit();
 }
 
-if (!deployer.validate_config()) {
-    var argsConfig = configBuilder.build_from_arguments();
-    deployer.set_config(argsConfig);
-}
+if ('host' in configArr) {
 
-if (['-c', '-config'].includes(args[0].toLowerCase())) { //args[0] === '-c' || args[0] === '-config'
+    if ('include' in configArr && configArr['include']) {
+        configArr['include'] = configArr['include'].split(',');
+    } else {
+        configArr['include'] = ['*', '**/*'];
+    }
 
-    let configFilePath = args[1];
+    if ('exclude' in configArr && configArr['exclude']) {
+        configArr['exclude'] = configArr['exclude'].split(',');
+    } else {
+        configArr['exclude'] = [];
+    }
 
-    if (!configFilePath)
-        configFilePath = __dirname + '.ftp-deployer.config.json';
+    deployer.set_config(configArr);
+
+} else {
+
+    let configFilePath = '';
+
+    if ('configFile' in configArr) {
+        let configFileSpecified = configArr['configFile'];
+        if (configFileSpecified) {
+            if (!fs.existsSync(configFileSpecified)) {
+                console.error(`Specified configuration file '${configFileSpecified}' does not exist.`);
+                process.exit(0);
+            }
+
+            configFilePath = configFileSpecified;
+        }
+    }
+
+    if (configFilePath === '') {
+        configFilePath = default_config_file_name;
+    }
+
+    if (!fs.existsSync(configFilePath)) {
+        console.error('No Configuration Found!');
+        process.exit(0);
+    }
+
+    console.log(`Loading Configuration From File: ${configFilePath}`);
 
     deployer.config_from_file(configFilePath);
 }
 
 if (!deployer.validate_config()) {
-    console.error('Invalid configuration!');
-    process.exit();
+    console.error('Configuration Invalid!', configArr);
+    process.exit(0);
 }
 
+if (!deployer.config['localRoot']) {
+    deployer.config['localRoot'] = './';
+}
+
+if (!deployer.config['remoteRoot']) {
+    deployer.config['remoteRoot'] = '';
+}
+
+if (!deployer.config['include']) {
+    deployer.config['include'] = ['*', '**/*'];
+}
+
+if (!deployer.config['exclude']) {
+    deployer.config['exclude'] = [];
+}
+
+//console.log('Configuration:', deployer.config);
+
+//process.exit(0);
 deployer.deploy();
