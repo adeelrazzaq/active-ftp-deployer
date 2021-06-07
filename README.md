@@ -119,7 +119,7 @@ or
 
 ```json
 "scripts": {
-        "deploy": "deploy /h activedatatools.cloudapp.net /port 21 /u ftpuser /p j8UY_91PP! /l D:/IT/NodeJS/FTP-Deploy/Example /r FTP-Deployer"
+        "deploy": "deploy /h {some_ip_or_domain} /port 21 /u ftpuser /p {password} /l local_path /r FTP-Deployer"
     }
 ```
 
@@ -130,14 +130,14 @@ If the commands are setup in script tag in package.json file then the parameters
 For exammple, if the deploy script is setup in the scripts tag inside package.json file as following:
 ```json
 "scripts": {
-        "deploy": "deploy /h activedatatools.cloudapp.net /port 21 /u ftpuser /p j8UY_91PP! /l D:/IT/NodeJS/FTP-Deploy/Example /r FTP-Deployer"
+        "deploy": "deploy /h {some_ip_or_domain} /port 21 /u ftpuser /p {password} /l local_path /r FTP-Deployer"
     }
 ```
 
 Then the following command will forward all the parameters specified after `--` to the deploy command.
 
 ```js
- > npm run deploy -- /h activedatatools.cloudapp.net /port 21 /u ftpuser /p j8UY_91PP! /l D:/IT/NodeJS/FTP-Deploy/Example /r FTP-Deployer
+ > npm run deploy /h {some_ip_or_domain} /port 21 /u ftpuser /p {password} /l local_path /r FTP-Deployer
 ```
 
 Once the package is published to npm respository and is installed from there, the cli commands can be run directly from the command prompt.
